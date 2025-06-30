@@ -104,7 +104,7 @@ export default function QuizForm() {
         open={isModalOpen}
         onOk={handleModalOk}
         onCancel={handleModalCancel}
-        cancelText="Fix the mistakes"
+        cancelText="Check again"
       >
         <CheckAnswers wordList={wordList} quizForm={quizForm}/>
       </Modal>
