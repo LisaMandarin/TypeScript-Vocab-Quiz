@@ -1,4 +1,4 @@
-import VocabForm from "./components/VocabForm";
+import VocabForm from "../components/VocabForm";
 
 export default function Home() {
   return (

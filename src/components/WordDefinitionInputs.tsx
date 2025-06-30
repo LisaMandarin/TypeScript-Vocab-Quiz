@@ -1,7 +1,7 @@
-import { VocabFormType } from "../data/types";
-import { handleFormChangeType } from "../data/types";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { handleFormDeleteType } from "../data/types";
+import { handleFormChangeType } from "../data/types";
+import { VocabFormType } from "../data/types";
 
 export default function WordDefinitionInputs({
   data,
