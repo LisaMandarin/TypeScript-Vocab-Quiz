@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { VocabFormType } from "../data/types";
 import WordDefinitionInputs from "./WordDefinitionInputs";
+import {message} from "@/lib/antd"
 
 export default function VocabForm() {
   const [formData, setFormData] = useState<VocabFormType[]>([{
@@ -20,12 +21,14 @@ export default function VocabForm() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formData.length <= 0) {
-        alert("No data")
+        // alert("No data")
+        message.error("No data")
         return;
     }
     const hasEmptyField = formData.some((data) => data.word.trim() === "" || data.definition.trim() === "")
     if (hasEmptyField) {
-        alert("You can't leave the field empty");
+        // alert("You can't leave the field empty");
+        message.error("You can't leave the field(s) empty")
         return;
     }
     console.log("Form: ", formData);
