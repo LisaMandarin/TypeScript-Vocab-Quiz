@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { VocabFormType } from "../data/types";
 import WordDefinitionInputs from "./WordDefinitionInputs";
 import { message, Modal } from "@/lib/antd";
 import VocabTable from "./VocabTable";
+import { useRouter } from "next/navigation";
 
 export default function VocabForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState<VocabFormType[]>([
     {
       word: "",
@@ -60,16 +62,15 @@ export default function VocabForm() {
   };
 
   const handleModalOk = () => {
+    const obj = JSON.stringify(formData)
+    localStorage.setItem("vocab-quiz", obj)
+    router.push("/quiz")
     setIsModalOpen(false);
   };
 
   const handleModalCancel = () => {
     setIsModalOpen(false);
   };
-
-  useEffect(() => {
-    console.log("Form: ", formData);
-  }, [formData]);
 
   return (
     <form

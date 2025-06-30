@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import "./globals.css";
+import "animate.css";
 
 const raleway = Raleway({
   variable: "--font-raleway",
