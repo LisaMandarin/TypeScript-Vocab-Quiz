@@ -85,6 +85,8 @@ export default function VocabForm() {
               handleChange={handleChange}
               index={index}
               handleDelete={handleDelete}
+              handleAppend={handleAppend}
+              isLast={index === formData.length-1}
             />
           </div>
         ))}
