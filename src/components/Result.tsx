@@ -2,8 +2,9 @@ import { VocabFormType } from "@/data/types";
 import { FaCheck } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import "animate.css";
+import Score from "./Score";
 
-export default function CheckAnswers({
+export default function Result({
   wordList,
   quizForm,
 }: {
@@ -18,12 +19,39 @@ export default function CheckAnswers({
     }
   };
   const isAllCorrect = (wordList: VocabFormType[], quizForm: string[]) => {
-    return wordList.every((item, index) => item.word === quizForm[index])
+    return wordList.every((item, index) => item.word === quizForm[index]);
+  };
+
+  const calculateScore = (wordList: VocabFormType[], quizForm: string[]): number => {
+    const correct = quizForm.filter((word, index) => word === wordList[index].word);
+    if (correct.length === 0) {
+      return 0;
+    }
+    if (correct.length > 0) {
+      return Math.round((correct.length / wordList.length) * 100);
+    }
+    return 0;
   }
 
   return (
     <div className="w-full flex flex-col">
-      <div className="text-4xl p-4 text-center font-extrabold">{isAllCorrect(wordList, quizForm) ? <span className="inline-block text-green-600 animate__animated animate__heartBeat animate__infinite">Congratulations</span>: <span className="inline-block text-red-600 animate__animated animate__headShake animate__infinite">Sorry</span>}</div>
+      <div className="flex justify-evenly p-4">
+        <div>
+          <Score value={calculateScore(wordList, quizForm)} />
+        </div>
+        <div className="text-4xl text-center font-extrabold">
+          {isAllCorrect(wordList, quizForm) ? (
+            <span className="inline-block text-green-600 animate__animated animate__heartBeat animate__infinite">
+              Congratulations
+            </span>
+          ) : (
+            <span className="inline-block text-red-600 animate__animated animate__headShake animate__infinite">
+              Sorry
+            </span>
+          )}
+        </div>
+      </div>
+
       <table>
         <thead className="bg-[#171717] text-white text-xl">
           <tr>

@@ -3,7 +3,7 @@
 import { VocabFormType } from "@/data/types";
 import { useEffect, useState } from "react";
 import { message, Modal } from "@/lib/antd";
-import CheckAnswers from "./CheckAnswers";
+import Result from "./Result";
 
 export default function QuizForm() {
   const [wordList, setWordList] = useState<VocabFormType[]>([]);
@@ -102,7 +102,7 @@ export default function QuizForm() {
         onCancel={handleModalCancel}
         cancelText="Check again"
       >
-        <CheckAnswers wordList={wordList} quizForm={quizForm}/>
+        <Result wordList={wordList} quizForm={quizForm}/>
       </Modal>
     </div>
   );
