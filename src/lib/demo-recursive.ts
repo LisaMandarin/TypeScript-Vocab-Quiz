@@ -3,7 +3,7 @@ import { VocabList, water_list, land_list, air_list, neighborhood_list, city_lis
 console.log("Starting the TypeScript Recursive Classes Example")
 
 // a category that can hold words and subcategories
-class VocabCategory {
+export class VocabCategory {
     name: string;
     list: VocabList;
     subcategories: VocabCategory[];
@@ -41,7 +41,7 @@ const place_list = { words: [], printAll: () => {} };
 const place = new VocabCategory("places", place_list, [neighborhood, city, country]);
 
 const quiz1_list = { words: [], printAll: () => {} };
-const quiz1 = new VocabCategory("Quiz1", quiz1_list, [transportation, place])
+export const quiz1 = new VocabCategory("Quiz1", quiz1_list, [transportation, place])
 
 // show the Quiz1 vocab tree
-quiz1.print();
+// quiz1.print();

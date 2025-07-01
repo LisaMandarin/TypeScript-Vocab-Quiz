@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.quiz1 = exports.VocabCategory = void 0;
 var demo_class_1 = require("./demo-class");
 console.log("Starting the TypeScript Recursive Classes Example");
 // a category that can hold words and subcategories
@@ -22,7 +23,8 @@ var VocabCategory = /** @class */ (function () {
     };
     return VocabCategory;
 }());
-// an example vocab tree with transportation and places
+exports.VocabCategory = VocabCategory;
+// an example vocab tree called Quiz1 with two subcategories called transportation and places.  Each subcategory contains several subcategories.
 var water = new VocabCategory("water", demo_class_1.water_list);
 var land = new VocabCategory("land", demo_class_1.land_list);
 var air = new VocabCategory("air", demo_class_1.air_list);
@@ -34,5 +36,6 @@ var country = new VocabCategory("countryside", demo_class_1.country_list);
 var place_list = { words: [], printAll: function () { } };
 var place = new VocabCategory("places", place_list, [neighborhood, city, country]);
 var quiz1_list = { words: [], printAll: function () { } };
-var quiz1 = new VocabCategory("Quiz1", quiz1_list, [transportation, place]);
-quiz1.print();
+exports.quiz1 = new VocabCategory("Quiz1", quiz1_list, [transportation, place]);
+// show the Quiz1 vocab tree
+// quiz1.print();
