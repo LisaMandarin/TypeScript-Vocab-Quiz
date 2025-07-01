@@ -27,7 +27,7 @@ Skills used:
 {Make a list of websites that you found helpful in this project}
 
 - [Net Ninja - Classes](https://youtu.be/OsFwOzr3_sE?si=doAvUWI6JFRwZaBN)
-- [Web Site Name](http://url.link.goes.here)
+- [Net Ninja - Public, Private, Readonly](https://youtu.be/aYmnwDlPB8s?si=d8aLVd0gpTiu8htC)
 
 # Future Work
 

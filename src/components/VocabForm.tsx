@@ -34,7 +34,6 @@ export default function VocabForm() {
       (data) => data.word.trim() === "" || data.definition.trim() === ""
     );
     if (hasEmptyField) {
-      // alert("You can't leave the field empty");
       message.error("You can't leave the field(s) empty");
       return;
     }

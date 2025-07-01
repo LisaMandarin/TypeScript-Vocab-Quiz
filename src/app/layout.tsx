@@ -12,7 +12,7 @@ const raleway = Raleway({
 
 export const metadata: Metadata = {
   title: "Vocab Quiz",
-  description: "Take quizzes by your own own vocabulary and definitions",
+  description: "Take quizzes by your own vocabulary and definitions",
 };
 
 export default function RootLayout({

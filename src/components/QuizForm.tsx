@@ -57,10 +57,6 @@ export default function QuizForm() {
     }
   }, []);
 
-  useEffect(() => {
-    console.log("quizForm: ", quizForm);
-  }, [quizForm]);
-
   return (
     <div>
       <form
