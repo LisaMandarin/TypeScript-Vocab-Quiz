@@ -4,6 +4,7 @@ import { VocabFormType } from "@/data/types";
 import { useEffect, useState } from "react";
 import { message, Modal } from "@/lib/antd";
 import Result from "./Result";
+import { fetchWordListType } from "@/data/types";
 
 export default function QuizForm() {
   const [wordList, setWordList] = useState<VocabFormType[]>([]);
@@ -49,7 +50,7 @@ export default function QuizForm() {
   };
 
   useEffect(() => {
-    const fetchWordList = async() => {
+    const fetchWordList: fetchWordListType = async() => {
       try {
         const data  = await Promise.resolve(localStorage.getItem("vocab-quiz"));
         if (data) {

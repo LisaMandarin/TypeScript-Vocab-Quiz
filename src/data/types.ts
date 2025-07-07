@@ -7,3 +7,4 @@ export type handleFormChangeType = (field: string, value: string, index: number)
 
 export type handleFormDeleteType = (index: number) => void
 
+export type fetchWordListType = () => Promise<void>
