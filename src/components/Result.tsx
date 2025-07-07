@@ -22,15 +22,23 @@ export default function Result({
     return wordList.every((item, index) => item.word === quizForm[index]);
   };
 
-  const calculateScore = (wordList: VocabFormType[], quizForm: string[]): number => {
-    const correct = quizForm.filter((word, index) => word === wordList[index].word);
-    if (correct.length === 0) {
-      return 0;
+  // const calculateScore = (wordList: VocabFormType[], quizForm: string[]): number => {
+  //   const correct = quizForm.filter((word, index) => word === wordList[index].word);
+  //   if (correct.length === 0) {
+  //     return 0;
+  //   }
+  //   if (correct.length > 0) {
+  //     return Math.round((correct.length / wordList.length) * 100);
+  //   }
+  //   return 0;
+  // }
+
+  const calculateScore = (wordList: VocabFormType[], quizForm: string[], index=0, correctCount=0): number => {
+    if (index >= wordList.length) {
+      return wordList.length === 0 ? 0 : Math.round((correctCount / wordList.length) * 100);
     }
-    if (correct.length > 0) {
-      return Math.round((correct.length / wordList.length) * 100);
-    }
-    return 0;
+    const isCorrect = quizForm[index] === wordList[index].word;
+    return calculateScore(wordList, quizForm, index+1, isCorrect ? correctCount+1 : correctCount)
   }
 
   return (

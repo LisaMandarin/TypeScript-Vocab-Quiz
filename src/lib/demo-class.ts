@@ -1,6 +1,6 @@
 console.log("Starting the TypeScript Classes Example")
 
-// Store a set of word - definition and a method to format the word-definition
+// Store a set of word-definition and a method to format the word-definition
 export class Wordset {
     word: string;
     definition: string;
