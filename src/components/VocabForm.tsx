@@ -123,7 +123,7 @@ export default function VocabForm({words}: {words: VocabFormType[]}) {
       <div>
         <button
           type="button"
-          onClick={() => saveFile({ formData, hasEmptyField })}
+          onClick={() => saveFile({ formData })}
           disabled={formData.length <= 0}
           className={`px-3 py-2 rounded-2xl w-full my-2 ${
             formData.length > 0

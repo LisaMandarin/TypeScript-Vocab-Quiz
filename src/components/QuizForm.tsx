@@ -6,7 +6,6 @@ import { message, Modal } from "@/lib/antd";
 import Result from "./Result";
 import { fetchWordListType } from "@/data/types";
 import { saveFile } from "@/lib/utils";
-import { hasEmptyField } from "@/lib/utils";
 
 export default function QuizForm() {
   const [wordList, setWordList] = useState<VocabFormType[]>([]);
