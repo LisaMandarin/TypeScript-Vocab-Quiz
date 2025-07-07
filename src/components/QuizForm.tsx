@@ -68,21 +68,21 @@ export default function QuizForm() {
   return (
     <div>
       <form
-        className="w-[370px] md:w-[600px] xl:w-[1000px] flex flex-col"
+        className="w-[calc(100vw-32px)] md:w-[calc(80vw-32px)] xl:w-[1000px] flex flex-col"
         onSubmit={handleSubmit}
       >
         {wordList.length > 0 &&
           wordList.map((data: VocabFormType, index: number) => (
             <div key={index} className="flex mt-3 gap-2">
               <div className="bg-gray-700 text-white p-1 flex items-center">{index + 1}</div>
-              <div className="flex flex-col md:flex-row gap-3 grow items-end">
+              <div className="flex flex-col md:flex-row gap-3 grow">
                 <p className="md:w-full border-b-2">{data.definition}</p>
-                <div className="md:w-1/3">
+                <div className="md:w-1/3 flex">
                   <input
                     placeholder="Enter the word"
                     value={quizForm[index] ?? ""}
                     onChange={(e) => handleChange(e.target.value, index)}
-                    className="py-1 px-2 border-b-2 focus:outline-0"
+                    className="py-1 px-2 border-b-2 focus:outline-0 grow"
                   />
                 </div>
               </div>

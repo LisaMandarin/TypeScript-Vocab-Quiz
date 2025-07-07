@@ -73,7 +73,7 @@ export default function VocabForm() {
 
   return (
     <form
-      className="w-[370px] md:w-[600px] xl:w-[1000px] flex flex-col"
+      className="w-[calc(100vw-32px)] md:w-[calc(80vw-32px)] xl:w-[1000px] flex flex-col"
       onSubmit={handleSubmit}
     >
       {formData.length > 0 &&
