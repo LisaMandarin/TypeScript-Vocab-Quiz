@@ -49,12 +49,19 @@ export default function QuizForm() {
   };
 
   useEffect(() => {
-    const data = localStorage.getItem("vocab-quiz");
-    if (data) {
-      const words = JSON.parse(data);
-      setWordList(words);
-      setQuizForm(Array(words.length).fill(""));
-    }
+    const fetchWordList = async() => {
+      try {
+        const data  = await Promise.resolve(localStorage.getItem("vocab-quiz"));
+        if (data) {
+          const words:VocabFormType[] = JSON.parse(data);
+          setWordList(words);
+          setQuizForm(Array(words.length).fill(""));
+        }
+      } catch (error) {
+        console.error("Failed to load vocab quiz: ", error)
+      }
+    };
+    fetchWordList();
   }, []);
 
   return (
@@ -66,8 +73,8 @@ export default function QuizForm() {
         {wordList.length > 0 &&
           wordList.map((data: VocabFormType, index: number) => (
             <div key={index} className="flex mt-3 gap-2">
-              <div className="bg-gray-700 text-white p-1">{index + 1}</div>
-              <div className="flex flex-col md:flex-row gap-3 grow">
+              <div className="bg-gray-700 text-white p-1 flex items-center">{index + 1}</div>
+              <div className="flex flex-col md:flex-row gap-3 grow items-end">
                 <p className="md:w-full border-b-2">{data.definition}</p>
                 <div className="md:w-1/3">
                   <input
