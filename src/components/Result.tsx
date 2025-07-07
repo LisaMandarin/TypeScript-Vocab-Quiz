@@ -43,11 +43,11 @@ export default function Result({
 
   return (
     <div className="w-full flex flex-col">
-      <div className="flex justify-evenly p-4">
+      <div className="flex justify-evenly items-center p-4">
         <div>
           <Score value={calculateScore(wordList, quizForm)} />
         </div>
-        <div className="text-4xl text-center font-extrabold">
+        <div className="md:text-2xl xl:text-4xl text-center font-extrabold">
           {isAllCorrect(wordList, quizForm) ? (
             <span className="inline-block text-green-600 animate__animated animate__heartBeat animate__infinite">
               Congratulations
@@ -63,10 +63,10 @@ export default function Result({
       <table>
         <thead className="bg-[#171717] text-white text-xl">
           <tr>
-            <th className="text-lg">Definition</th>
-            <th className="text-lg">Correct Answer</th>
-            <th className="text-lg">Your Answer</th>
-            <th className="text-lg">Check</th>
+            <th className="text-base md:text-lg">Definition</th>
+            <th className="text-base md:text-lg">Correct Answer</th>
+            <th className="text-base md:text-lg">Your Answer</th>
+            <th className="text-base md:text-lg">Check</th>
           </tr>
         </thead>
 
