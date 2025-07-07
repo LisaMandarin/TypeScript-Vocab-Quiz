@@ -7,7 +7,8 @@ import WordDefinitionInputs from "./WordDefinitionInputs";
 import { message, Modal } from "@/lib/antd";
 import VocabTable from "./VocabTable";
 import { useRouter } from "next/navigation";
-import { utils, writeFile } from "xlsx";
+import { saveFile } from "@/lib/utils";
+import { hasEmptyField } from "@/lib/utils";
 
 export default function VocabForm({words}: {words: VocabFormType[]}) {
   const router = useRouter();
@@ -24,9 +25,7 @@ export default function VocabForm({words}: {words: VocabFormType[]}) {
     );
   };
 
-  const hasEmptyField = formData.some(
-      (data) => data.word.trim() === "" || data.definition.trim() === ""
-    );
+  
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,7 +34,7 @@ export default function VocabForm({words}: {words: VocabFormType[]}) {
       return;
     }
     
-    if (hasEmptyField) {
+    if (hasEmptyField({formData})) {
       message.error("You can't leave the field(s) empty");
       return;
     }
@@ -73,22 +72,7 @@ export default function VocabForm({words}: {words: VocabFormType[]}) {
     setIsModalOpen(false);
   };
 
-  const saveFile = () => {
-    console.log('clicked')
-    if (formData.length <= 0) {
-      message.info("No data to be saved")
-      return;
-    }
-    if (hasEmptyField) {
-      message.error("You can't leave the field(s) empty");
-      return;
-    }
-
-    const sheet = utils.json_to_sheet(formData);
-    const workbook = utils.book_new();
-    utils.book_append_sheet(workbook, sheet, "Data");
-    writeFile(workbook, "vocab-quiz.xlsx");
-  }
+  
 
   useEffect(() => {
     if (words.length > 0) {
@@ -139,7 +123,7 @@ export default function VocabForm({words}: {words: VocabFormType[]}) {
       <div>
         <button
           type="button"
-          onClick={saveFile}
+          onClick={() => saveFile({ formData, hasEmptyField })}
           disabled={formData.length <= 0}
           className={`px-3 py-2 rounded-2xl w-full my-2 ${
             formData.length > 0
