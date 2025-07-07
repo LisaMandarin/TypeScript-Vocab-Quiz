@@ -7,6 +7,7 @@ import WordDefinitionInputs from "./WordDefinitionInputs";
 import { message, Modal } from "@/lib/antd";
 import VocabTable from "./VocabTable";
 import { useRouter } from "next/navigation";
+import { utils, writeFile } from "xlsx";
 
 export default function VocabForm({words}: {words: VocabFormType[]}) {
   const router = useRouter();
@@ -23,16 +24,17 @@ export default function VocabForm({words}: {words: VocabFormType[]}) {
     );
   };
 
+  const hasEmptyField = formData.some(
+      (data) => data.word.trim() === "" || data.definition.trim() === ""
+    );
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formData.length <= 0) {
-      // alert("No data")
       message.error("No data");
       return;
     }
-    const hasEmptyField = formData.some(
-      (data) => data.word.trim() === "" || data.definition.trim() === ""
-    );
+    
     if (hasEmptyField) {
       message.error("You can't leave the field(s) empty");
       return;
@@ -70,6 +72,23 @@ export default function VocabForm({words}: {words: VocabFormType[]}) {
   const handleModalCancel = () => {
     setIsModalOpen(false);
   };
+
+  const saveFile = () => {
+    console.log('clicked')
+    if (formData.length <= 0) {
+      message.info("No data to be saved")
+      return;
+    }
+    if (hasEmptyField) {
+      message.error("You can't leave the field(s) empty");
+      return;
+    }
+
+    const sheet = utils.json_to_sheet(formData);
+    const workbook = utils.book_new();
+    utils.book_append_sheet(workbook, sheet, "Data");
+    writeFile(workbook, "vocab-quiz.xlsx");
+  }
 
   useEffect(() => {
     if (words.length > 0) {
@@ -115,6 +134,20 @@ export default function VocabForm({words}: {words: VocabFormType[]}) {
           }`}
         >
           Create Quiz
+        </button>
+      </div>
+      <div>
+        <button
+          type="button"
+          onClick={saveFile}
+          disabled={formData.length <= 0}
+          className={`px-3 py-2 rounded-2xl w-full my-2 ${
+            formData.length > 0
+              ? "bg-[#ffffff] text-[#171717] border border-[#A9A9A9] cursor-pointer hover:bg-[#A9A9A9]"
+              : "bg-[#A9A9A9]"
+          }`}
+        >
+          Save as File
         </button>
       </div>
       <Modal
