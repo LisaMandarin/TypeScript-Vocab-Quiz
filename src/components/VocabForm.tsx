@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { VocabFormType } from "../data/types";
 import WordDefinitionInputs from "./WordDefinitionInputs";
@@ -8,7 +8,7 @@ import { message, Modal } from "@/lib/antd";
 import VocabTable from "./VocabTable";
 import { useRouter } from "next/navigation";
 
-export default function VocabForm() {
+export default function VocabForm({words}: {words: VocabFormType[]}) {
   const router = useRouter();
   const [formData, setFormData] = useState<VocabFormType[]>([
     {
@@ -71,6 +71,14 @@ export default function VocabForm() {
     setIsModalOpen(false);
   };
 
+  useEffect(() => {
+    if (words.length > 0) {
+      setFormData(words)
+    } else {
+      setFormData([{word: "", definition: ""}])
+    }
+  }, [words])
+
   return (
     <form
       className="w-[calc(100vw-32px)] md:w-[calc(80vw-32px)] xl:w-[1000px] flex flex-col"
@@ -79,7 +87,7 @@ export default function VocabForm() {
       {formData.length > 0 &&
         formData.map((data, index) => (
           <div key={index} className="flex mt-4 gap-2">
-            <div className="bg-gray-700 text-white p-1">{index + 1}</div>
+            <div className="bg-gray-700 text-white p-1 flex justify-center items-center">{index + 1}</div>
             <WordDefinitionInputs
               data={data}
               handleChange={handleChange}
