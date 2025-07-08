@@ -8,9 +8,14 @@ This application allows users to take quizzes by their self-defined vocabulary a
 
 Skills used:
 - Next.js
+- Redux
 - TypeScript
 - Tailwind CSS
 - Ant Design
+
+Features:
+- Upload excel files to be used as word list
+- Save word list as excel files
 
 [Software Demo Video](http://youtube.link.goes.here)
 
@@ -28,9 +33,8 @@ Skills used:
 
 - [Net Ninja - Classes](https://youtu.be/OsFwOzr3_sE?si=doAvUWI6JFRwZaBN)
 - [Net Ninja - Public, Private, Readonly](https://youtu.be/aYmnwDlPB8s?si=d8aLVd0gpTiu8htC)
-
+- [Cosden Solution - Redux Tutorial](https://youtu.be/5yEG6GhoJBs?si=gc8xQWX18mMC8pGI)
 # Future Work
 
-- Item 1
-- Item 2
-- Item 3
+- Flip Card Practice
+- Matching Game

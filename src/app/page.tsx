@@ -5,7 +5,6 @@ import Link from "next/link";
 import * as XLSX from "xlsx";
 import { VocabFormType } from "@/data/types";
 import UploadFile from "@/components/UploadFile";
-import FlipCard from "@/components/FlipCard";
 
 export default function Home() {
   const [file, setFile] = useState<File | undefined>(); // uploaded xlsx file
@@ -37,7 +36,6 @@ export default function Home() {
       </h3>
       <UploadFile file={file} setFile={setFile} setWords={setWords}/>
       <VocabForm words={words.length > 0 ? words : []}/>
-      <FlipCard front="" back=""/>
     </div>
   );
 }

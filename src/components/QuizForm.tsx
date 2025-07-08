@@ -6,11 +6,14 @@ import { message, Modal } from "@/lib/antd";
 import Result from "./Result";
 import { fetchWordListType } from "@/data/types";
 import { saveFile } from "@/lib/utils";
+import { useSelector, useDispatch } from "react-redux";
+import { rootState } from "@/lib/store";
+import { setWordList } from "@/lib/vocabSlice";
 
 export default function QuizForm() {
-  const [wordList, setWordList] = useState<VocabFormType[]>([]);
-
+  const wordList = useSelector((state: rootState) => state.vocab.wordList);
   const [quizForm, setQuizForm] = useState<string[]>([]);
+  const dispatch = useDispatch();
   const handleChange = (value: string, index: number) => {
     setQuizForm((prev) => {
       const updated = [...prev];
@@ -56,7 +59,7 @@ export default function QuizForm() {
         const data  = await Promise.resolve(localStorage.getItem("vocab-quiz"));
         if (data) {
           const words:VocabFormType[] = JSON.parse(data);
-          setWordList(words);
+          dispatch(setWordList(words))
           setQuizForm(Array(words.length).fill(""));
         }
       } catch (error) {
@@ -105,7 +108,7 @@ export default function QuizForm() {
         <div>
         <button
           type="button"
-          onClick={() => saveFile({ formData: wordList })}
+          onClick={() => saveFile({ wordList })}
           disabled={wordList.length <= 0}
           className={`px-3 py-2 rounded-2xl w-full my-2 ${
             wordList.length > 0

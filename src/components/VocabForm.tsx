@@ -8,53 +8,55 @@ import { message, Modal } from "@/lib/antd";
 import VocabTable from "./VocabTable";
 import { useRouter } from "next/navigation";
 import { saveFile } from "@/lib/utils";
-import { hasEmptyField } from "@/lib/utils";
+import { useDispatch, useSelector } from "react-redux";
+import { rootState, AppDispatch } from "@/lib/store";
+import {
+  setWordList,
+  updateWordList,
+  appendWordItem,
+  deleteWordItem,
+  resetWordList,
+  checkHasEmptyField
+} from "@/lib/vocabSlice";
 
-export default function VocabForm({words}: {words: VocabFormType[]}) {
+export default function VocabForm({ words }: { words: VocabFormType[] }) {
+  const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
-  const [formData, setFormData] = useState<VocabFormType[]>([
-    {
-      word: "",
-      definition: "",
-    },
-  ]);
+  const wordList = useSelector((state: rootState) => state.vocab.wordList);
+  const hasEmptyField = useSelector((state: rootState) => state.vocab.hasEmptyField);
 
   const handleChange = (field: string, value: string, index: number) => {
-    setFormData((prev) =>
-      prev.map((item, i) => (i === index ? { ...item, [field]: value } : item))
-    );
+    dispatch(updateWordList({ index, field, value }));
   };
-
-  
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formData.length <= 0) {
+    if (wordList.length <= 0) {
       message.error("No data");
       return;
     }
+
+    dispatch(checkHasEmptyField());
     
-    if (hasEmptyField({formData})) {
+    if (hasEmptyField) {
       message.error("You can't leave the field(s) empty");
       return;
     }
     showModal();
   };
 
-  const handleAppend = () => {
-    setFormData((prev) => [
-      ...prev,
-      {
-        word: "",
-        definition: "",
-      },
-    ]);
-  };
+  const handleSave = () => {
+    if (wordList.length <= 0) {
+      message.info("No data to be saved");
+      return;
+    }
 
-  const handleDelete = (index: number) => {
-    setFormData((prev) => prev.filter((item, i) => i !== index));
-  };
-
+    dispatch(checkHasEmptyField());
+    if (hasEmptyField) {
+      message.error("You can't leave the field(s) empty");
+    }
+    saveFile({ wordList });
+  }
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -62,9 +64,9 @@ export default function VocabForm({words}: {words: VocabFormType[]}) {
   };
 
   const handleModalOk = () => {
-    const obj = JSON.stringify(formData)
-    localStorage.setItem("vocab-quiz", obj)
-    router.push("/quiz")
+    const obj = JSON.stringify(wordList);
+    localStorage.setItem("vocab-quiz", obj);
+    router.push("/quiz");
     setIsModalOpen(false);
   };
 
@@ -72,47 +74,48 @@ export default function VocabForm({words}: {words: VocabFormType[]}) {
     setIsModalOpen(false);
   };
 
-  
-
+  // retrieve words from the uploaded file and put them in the form
   useEffect(() => {
     if (words.length > 0) {
-      setFormData(words)
+      dispatch(setWordList(words))
     } else {
-      setFormData([{word: "", definition: ""}])
+      dispatch(resetWordList())
     }
-  }, [words])
+  }, [words, dispatch]);
 
   return (
     <form
       className="w-[calc(100vw-32px)] md:w-[calc(80vw-32px)] xl:w-[1000px] flex flex-col"
       onSubmit={handleSubmit}
     >
-      {formData.length > 0 &&
-        formData.map((data, index) => (
+      {wordList.length > 0 &&
+        wordList.map((data, index) => (
           <div key={index} className="flex mt-4 gap-2">
-            <div className="bg-gray-700 text-white p-1 flex justify-center items-center">{index + 1}</div>
+            <div className="bg-gray-700 text-white p-1 flex justify-center items-center">
+              {index + 1}
+            </div>
             <WordDefinitionInputs
               data={data}
               handleChange={handleChange}
               index={index}
-              handleDelete={handleDelete}
-              handleAppend={handleAppend}
-              isLast={index === formData.length-1}
+              handleDelete={() => dispatch(deleteWordItem(index))}
+              handleAppend={() => dispatch(appendWordItem())}
+              isLast={index === wordList.length - 1}
             />
           </div>
         ))}
       <hr className="text-gray-300 my-2" />
       <div className="flex justify-center">
         <div className="w-9 aspect-square">
-          <CiCirclePlus className="w-full h-full" onClick={handleAppend} />
+          <CiCirclePlus className="w-full h-full" onClick={() => dispatch(appendWordItem())} />
         </div>
       </div>
       <div>
         <button
           type="submit"
-          disabled={formData.length <= 0}
+          disabled={wordList.length <= 0}
           className={`px-3 py-2 rounded-2xl w-full my-2 ${
-            formData.length > 0
+            wordList.length > 0
               ? "bg-[#171717] text-white cursor-pointer hover:bg-[#A9A9A9]"
               : "bg-[#A9A9A9]"
           }`}
@@ -123,10 +126,10 @@ export default function VocabForm({words}: {words: VocabFormType[]}) {
       <div>
         <button
           type="button"
-          onClick={() => saveFile({ formData })}
-          disabled={formData.length <= 0}
+          onClick={handleSave}
+          disabled={wordList.length <= 0}
           className={`px-3 py-2 rounded-2xl w-full my-2 ${
-            formData.length > 0
+            wordList.length > 0
               ? "bg-[#ffffff] text-[#171717] border border-[#A9A9A9] cursor-pointer hover:bg-[#A9A9A9]"
               : "bg-[#A9A9A9]"
           }`}
@@ -134,16 +137,30 @@ export default function VocabForm({words}: {words: VocabFormType[]}) {
           Save as File
         </button>
       </div>
-      <Modal
-          title="Vocabulary - Definitions"
-          closable={{ "aria-label": "Custom Close Button" }}
-          open={isModalOpen}
-          onOk={handleModalOk}
-          onCancel={handleModalCancel}
-          okText="Take quiz"
+      <div>
+        <button
+          type="button"
+          onClick={() => router.push("/practice")}
+          disabled={wordList.length <= 0}
+          className={`px-3 py-2 rounded-2xl w-full my-2 ${
+            wordList.length > 0
+              ? "bg-[#ffffff] text-[#171717] border border-[#A9A9A9] cursor-pointer hover:bg-[#A9A9A9]"
+              : "bg-[#A9A9A9]"
+          }`}
         >
-          <VocabTable wordList={formData} />
-        </Modal>
+          Practice
+        </button>
+      </div>
+      <Modal
+        title="Vocabulary - Definitions"
+        closable={{ "aria-label": "Custom Close Button" }}
+        open={isModalOpen}
+        onOk={handleModalOk}
+        onCancel={handleModalCancel}
+        okText="Take quiz"
+      >
+        <VocabTable wordList={wordList} />
+      </Modal>
     </form>
   );
 }

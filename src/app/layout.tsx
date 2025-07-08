@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import "./globals.css";
 import "animate.css";
+import Providers from "@/lib/Providers";
 
 const raleway = Raleway({
   variable: "--font-raleway",
   weight: ["100", "400", "700", "900"],
-  subsets: ["latin"]
-})
-
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Vocab Quiz",
@@ -22,10 +22,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-         className={`${raleway.variable} antialiased`}
-      >
-        {children}
+      <body className={`${raleway.variable} antialiased`}>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
