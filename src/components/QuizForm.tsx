@@ -7,13 +7,15 @@ import Result from "./Result";
 import { fetchWordListType } from "@/data/types";
 import { saveFile } from "@/lib/utils";
 import { useSelector, useDispatch } from "react-redux";
-import { rootState } from "@/lib/store";
+import { AppDispatch, rootState } from "@/lib/store";
 import { setWordList } from "@/lib/vocabSlice";
+import FormButton from "./FormButton";
+import SubmitButton from "./SubmitButton";
 
 export default function QuizForm() {
   const wordList = useSelector((state: rootState) => state.vocab.wordList);
   const [quizForm, setQuizForm] = useState<string[]>([]);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const handleChange = (value: string, index: number) => {
     setQuizForm((prev) => {
       const updated = [...prev];
@@ -28,15 +30,18 @@ export default function QuizForm() {
       message.error("You did not enter any words");
       return;
     }
-    const hasEmptyField = () => {
+    const hasEmptyField: () => boolean = () => {
       return quizForm.some((item) => item.trim() === "");
     };
-
     if (hasEmptyField()) {
       message.error("You can't leave field(s) empty");
       return;
     }
     showModal();
+  };
+
+  const handleSave = () => {
+    saveFile({ wordList });
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,16 +59,16 @@ export default function QuizForm() {
   };
 
   useEffect(() => {
-    const fetchWordList: fetchWordListType = async() => {
+    const fetchWordList: fetchWordListType = async () => {
       try {
-        const data  = await Promise.resolve(localStorage.getItem("vocab-quiz"));
+        const data = await Promise.resolve(localStorage.getItem("vocab-quiz"));
         if (data) {
-          const words:VocabFormType[] = JSON.parse(data);
-          dispatch(setWordList(words))
+          const words: VocabFormType[] = JSON.parse(data);
+          dispatch(setWordList(words));
           setQuizForm(Array(words.length).fill(""));
         }
       } catch (error) {
-        console.error("Failed to load vocab quiz: ", error)
+        console.error("Failed to load vocab quiz: ", error);
       }
     };
     fetchWordList();
@@ -78,7 +83,9 @@ export default function QuizForm() {
         {wordList.length > 0 &&
           wordList.map((data: VocabFormType, index: number) => (
             <div key={index} className="flex mt-3 gap-2">
-              <div className="bg-gray-700 text-white p-1 flex items-center">{index + 1}</div>
+              <div className="bg-gray-700 text-white p-1 flex items-center">
+                {index + 1}
+              </div>
               <div className="flex flex-col md:flex-row gap-3 grow">
                 <p className="md:w-full border-b-2">{data.definition}</p>
                 <div className="md:w-1/3 flex">
@@ -92,33 +99,12 @@ export default function QuizForm() {
               </div>
             </div>
           ))}
-        <div>
-          <button
-            type="submit"
-            disabled={wordList.length <= 0}
-            className={`px-3 py-2 rounded-2xl w-full my-2 ${
-              wordList.length > 0
-                ? "bg-[#171717] text-white cursor-pointer hover:bg-[#A9A9A9]"
-                : "bg-[#A9A9A9]"
-            }`}
-          >
-            Submit Quiz
-          </button>
-        </div>
-        <div>
-        <button
-          type="button"
-          onClick={() => saveFile({ wordList })}
-          disabled={wordList.length <= 0}
-          className={`px-3 py-2 rounded-2xl w-full my-2 ${
-            wordList.length > 0
-              ? "bg-[#ffffff] text-[#171717] border border-[#A9A9A9] cursor-pointer hover:bg-[#A9A9A9]"
-              : "bg-[#A9A9A9]"
-          }`}
-        >
-          Save as File
-        </button>
-      </div>
+        <SubmitButton wordList={wordList} buttonName="See Score" />
+        <FormButton
+          wordList={wordList}
+          buttonName="Save as File"
+          handleClick={handleSave}
+        />
       </form>
       <Modal
         title="Check the answers"
@@ -128,7 +114,7 @@ export default function QuizForm() {
         onCancel={handleModalCancel}
         cancelText="Check again"
       >
-        <Result wordList={wordList} quizForm={quizForm}/>
+        <Result wordList={wordList} quizForm={quizForm} />
       </Modal>
     </div>
   );

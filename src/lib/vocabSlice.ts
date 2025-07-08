@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { VocabFormType } from "@/data/types";
+import { rootState } from "./store";
 
-const initialState: { wordList: VocabFormType[]; hasEmptyField: boolean } = {
+const initialState: { wordList: VocabFormType[] } = {
   wordList: [{ word: "", definition: "" }],
-  hasEmptyField: false,
 };
 
 export const vocabSlice = createSlice({
@@ -28,12 +28,7 @@ export const vocabSlice = createSlice({
     },
     resetWordList: (state) => {
       state.wordList = [{ word: "", definition: "" }];
-    },
-    checkHasEmptyField: (state) => {
-        state.hasEmptyField = state.wordList.some(
-            (item) => item.word.trim() === '' || item.definition.trim() === ''
-        );
-    },
+    }
   },
 });
 
@@ -43,7 +38,10 @@ export const {
     appendWordItem,
     deleteWordItem,
     resetWordList,
-    checkHasEmptyField,
 } = vocabSlice.actions;
+
+export const hasEmptyField = (state: rootState) => {
+  return state.vocab.wordList.some((item) => item.word.trim() === "" || item.definition.trim() === "");
+}
 
 export default vocabSlice.reducer
