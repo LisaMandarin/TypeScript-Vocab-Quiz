@@ -1,6 +1,6 @@
 import { MdOutlineDeleteOutline } from "react-icons/md";
-import { handleFormDeleteType } from "../data/types";
-import { handleFormChangeType } from "../data/types";
+import { HandleFormDeleteType } from "../data/types";
+import { HandleFormChangeType } from "../data/types";
 import { VocabFormType } from "../data/types";
 import { useEffect, useRef } from "react";
 
@@ -13,9 +13,9 @@ export default function WordDefinitionInputs({
   isLast
 }: {
   data: VocabFormType;
-  handleChange: handleFormChangeType;
+  handleChange: HandleFormChangeType;
   index: number;
-  handleDelete: handleFormDeleteType;
+  handleDelete: HandleFormDeleteType;
   handleAppend: () => void;
   isLast: boolean;
 }) {

@@ -2,9 +2,10 @@
 
 import { VocabFormType } from "@/data/types";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { message, Modal } from "@/lib/antd";
 import Result from "./Result";
-import { fetchWordListType } from "@/data/types";
+import { FetchWordListType } from "@/data/types";
 import { saveFile } from "@/lib/utils";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, rootState } from "@/lib/store";
@@ -13,6 +14,7 @@ import FormButton from "./FormButton";
 import SubmitButton from "./SubmitButton";
 
 export default function QuizForm() {
+  const router = useRouter();
   const wordList = useSelector((state: rootState) => state.vocab.wordList);
   const [quizForm, setQuizForm] = useState<string[]>([]);
   const dispatch = useDispatch<AppDispatch>();
@@ -44,6 +46,10 @@ export default function QuizForm() {
     saveFile({ wordList });
   };
 
+  const handlePractice = () => {
+    router.push("/practice")
+  }
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -59,7 +65,7 @@ export default function QuizForm() {
   };
 
   useEffect(() => {
-    const fetchWordList: fetchWordListType = async () => {
+    const fetchWordList: FetchWordListType = async () => {
       try {
         const data = await Promise.resolve(localStorage.getItem("vocab-quiz"));
         if (data) {
@@ -105,6 +111,7 @@ export default function QuizForm() {
           buttonName="Save as File"
           handleClick={handleSave}
         />
+        <FormButton wordList={wordList} buttonName="Practice" handleClick={handlePractice} />
       </form>
       <Modal
         title="Check the answers"

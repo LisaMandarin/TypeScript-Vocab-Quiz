@@ -59,6 +59,8 @@ export default function VocabForm({ words }: { words: VocabFormType[] }) {
   }
 
   const handlePractice = () => {
+    const obj = JSON.stringify(wordList);
+    localStorage.setItem("vocab-quiz", obj);
     router.push("/practice")
   }
   const [isModalOpen, setIsModalOpen] = useState(false);

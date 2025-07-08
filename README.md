@@ -37,6 +37,5 @@ Features:
 # Future Work
 
 - Peep answer
-- Flip Card Practice
 - Matching Game
 - Save Result

@@ -3,8 +3,8 @@ export type VocabFormType = {
     definition: string;
 }
 
-export type handleFormChangeType = (field: string, value: string, index: number) => void
+export type HandleFormChangeType = (field: string, value: string, index: number) => void
 
-export type handleFormDeleteType = (index: number) => void
+export type HandleFormDeleteType = (index: number) => void
 
-export type fetchWordListType = () => Promise<void>
+export type FetchWordListType = () => Promise<void>
