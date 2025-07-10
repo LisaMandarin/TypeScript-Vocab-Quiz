@@ -18,14 +18,18 @@ export default function Page() {
   const wordList = useSelector((state: rootState) => state.vocab.wordList);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+  
+  // handle the action when "Quiz" button is clicked
   const handleQuiz = () => {
     router.push("/quiz");
   };
 
+  // handle the action when "Save as File" button is clicked
   const handleSave = () => {
     saveFile({ wordList });
   };
 
+  // fetch the word-definition list from local storage when the page is first rendered
   useEffect(() => {
     const fetchWordList: FetchWordListType = async () => {
       try {

@@ -18,6 +18,8 @@ export default function QuizForm() {
   const wordList = useSelector((state: rootState) => state.vocab.wordList);
   const [quizForm, setQuizForm] = useState<string[]>([]);
   const dispatch = useDispatch<AppDispatch>();
+  
+  // handle the input change of the quiz form
   const handleChange = (value: string, index: number) => {
     setQuizForm((prev) => {
       const updated = [...prev];
@@ -26,6 +28,7 @@ export default function QuizForm() {
     });
   };
 
+  // validate the input fields and toggle the modal to display score
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (quizForm.length === 0) {
@@ -42,28 +45,34 @@ export default function QuizForm() {
     showModal();
   };
 
+  // save the word-definition list in excel file for users to download
   const handleSave = () => {
     saveFile({ wordList });
   };
 
+  // navigate users to practice page
   const handlePractice = () => {
     router.push("/practice")
   }
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // toggle the score modal open
   const showModal = () => {
     setIsModalOpen(true);
   };
 
+  // toggle the score modal closed when "ok" button is clicked
   const handleModalOk = () => {
     setIsModalOpen(false);
   };
 
+  // toggle the score modale closed when "cancel" button is clicked
   const handleModalCancel = () => {
     setIsModalOpen(false);
   };
 
+  // retrieve word-definition list from local storage when the page is initially rendered
   useEffect(() => {
     const fetchWordList: FetchWordListType = async () => {
       try {

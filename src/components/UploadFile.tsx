@@ -8,6 +8,7 @@ export default function UploadFile({file, setFile, setWords}: {
     setWords: (words: VocabFormType[]) => void}) {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+    // upload an excel file to be processed
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = e.target.files?.[0];
         if (selectedFile) {
@@ -17,7 +18,8 @@ export default function UploadFile({file, setFile, setWords}: {
           fileInputRef.current.value ="";
         }
       }
-
+    
+      // clear out the excel file that is uploaded
     const deleteFile = () => {
         setFile(undefined)
         setWords([])

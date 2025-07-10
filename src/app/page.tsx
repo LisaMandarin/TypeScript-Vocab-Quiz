@@ -10,6 +10,7 @@ export default function Home() {
   const [file, setFile] = useState<File | undefined>(); // uploaded xlsx file
   const [words, setWords] = useState<VocabFormType[] | []>([])  // wordlist from uploaded file for formData
   
+  // When the excel file is uploaded, it is converted to readable JSON and stored in "words" to be displayed in the form
   useEffect(() => {
     const fetchFile = async() => {
       if (file) {

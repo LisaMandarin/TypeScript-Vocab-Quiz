@@ -1,6 +1,7 @@
 import { VocabCategory } from "./demo-recursive";
 import { quiz1 } from "./demo-recursive";
 
+// wait for one second and then print the category and its subcategories and the items in them
 async function saveVocabTree(category: VocabCategory): Promise<void> {
     console.log("Saving vocab tree...");
 
@@ -17,6 +18,7 @@ async function saveVocabTree(category: VocabCategory): Promise<void> {
     })
 }
 
+// execute the async function of saveVocabTree and show the status of the execution
 async function run() {
     try {
         await saveVocabTree(quiz1);

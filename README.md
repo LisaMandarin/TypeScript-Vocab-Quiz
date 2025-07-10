@@ -16,6 +16,7 @@ Skills used:
 Features:
 - Upload excel files to be used as word list
 - Save word list as excel files
+- Data can be shared between components using Redux
 
 [Software Demo Video](http://youtube.link.goes.here)
 
@@ -39,3 +40,4 @@ Features:
 - Peep answer
 - Matching Game
 - Save Result
+- Random order during quiz time
