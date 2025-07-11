@@ -44,4 +44,4 @@ const quiz1_list = { words: [], printAll: () => {} };
 export const quiz1 = new VocabCategory("Quiz1", quiz1_list, [transportation, place])
 
 // show the Quiz1 vocab tree
-// quiz1.print();
+quiz1.print();

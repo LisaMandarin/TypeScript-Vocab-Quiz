@@ -18,7 +18,7 @@ Features:
 - Save word list as excel files
 - Data can be shared between components using Redux
 
-[Software Demo Video](https://youtu.be/7TXLo2cw0mk)
+[Software Demo Video](https://youtu.be/15ykQzB2HJ4)
 
 # Development Environment
 

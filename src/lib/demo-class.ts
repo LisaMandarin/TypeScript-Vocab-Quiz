@@ -56,9 +56,9 @@ export const city_list = new VocabList([city_wordset1, city_wordset2, city_words
 export const country_list = new VocabList([country_wordset1, country_wordset2]);
 
 // print the list of wordsets
-// water_list.printAll();
-// land_list.printAll();
-// air_list.printAll();
-// neighborhood_list.printAll();
-// city_list.printAll();
-// country_list.printAll();
+water_list.printAll();
+land_list.printAll();
+air_list.printAll();
+neighborhood_list.printAll();
+city_list.printAll();
+country_list.printAll();
