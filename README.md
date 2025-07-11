@@ -30,7 +30,6 @@ Features:
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
 
 - [Net Ninja - Classes](https://youtu.be/OsFwOzr3_sE?si=doAvUWI6JFRwZaBN)
 - [Net Ninja - Public, Private, Readonly](https://youtu.be/aYmnwDlPB8s?si=d8aLVd0gpTiu8htC)
